@@ -63,6 +63,108 @@ def rounded(draw, box, fill=PANEL, outline=None, radius=22, width=2):
     )
 
 
+def arrow(draw, start, end, color=MUTED, width=5):
+    x1, y1 = start
+    x2, y2 = end
+    draw.line((x1, y1, x2, y2), fill=color, width=width)
+    if x1 == x2:
+        direction = 1 if y2 > y1 else -1
+        draw.polygon(
+            [
+                (x2, y2),
+                (x2 - 10, y2 - 16 * direction),
+                (x2 + 10, y2 - 16 * direction),
+            ],
+            fill=color,
+        )
+    else:
+        direction = 1 if x2 > x1 else -1
+        draw.polygon(
+            [
+                (x2, y2),
+                (x2 - 16 * direction, y2 - 10),
+                (x2 - 16 * direction, y2 + 10),
+            ],
+            fill=color,
+        )
+
+
+def render_architecture():
+    image, draw = canvas(
+        "AI lakehouse optimization lab",
+        "The model proposes; policy, measurements, and result equality decide.",
+    )
+
+    rounded(draw, (60, 185, 320, 320), outline=ORANGE)
+    draw.text((88, 218), "Amazon Bedrock", font=font(27, True), fill=TEXT)
+    draw.text((88, 265), "Tool-shaped proposal", font=font(20), fill=MUTED)
+    draw.text((88, 295), "Guardrail assessment", font=font(20), fill=MUTED)
+
+    rounded(draw, (390, 185, 665, 320), outline=GREEN)
+    draw.text((420, 218), "Policy gate", font=font(27, True), fill=TEXT)
+    draw.text((420, 265), "Read-only SQL", font=font(20), fill=MUTED)
+    draw.text((420, 295), "Allow-listed identifiers", font=font(20), fill=MUTED)
+
+    rounded(draw, (735, 165, 1340, 340), outline=BLUE)
+    draw.text(
+        (765, 202),
+        "Shared S3 Tables / Iceberg data",
+        font=font(27, True),
+        fill=TEXT,
+    )
+    draw.text(
+        (765, 249),
+        "Glue Data Catalog + Lake Formation",
+        font=font(20),
+        fill=MUTED,
+    )
+    draw.text(
+        (765, 282),
+        "Unpartitioned baseline + partitioned candidate",
+        font=font(20),
+        fill=MUTED,
+    )
+    draw.text(
+        (765, 315),
+        "Immutable 10,000-row validation fixture",
+        font=font(20),
+        fill=MUTED,
+    )
+
+    arrow(draw, (320, 252), (380, 252))
+    arrow(draw, (665, 252), (725, 252))
+
+    engines = [
+        (60, "Amazon Athena", "Bytes scanned + timing", BLUE),
+        (510, "EMR Serverless", "Spark cross-engine read", ORANGE),
+        (960, "Redshift Serverless", "External-schema read", "#E15FED"),
+    ]
+    for x, name, detail, color in engines:
+        rounded(draw, (x, 440, x + 380, 565), outline=color)
+        draw.text((x + 30, 474), name, font=font(26, True), fill=TEXT)
+        draw.text((x + 30, 522), detail, font=font(20), fill=MUTED)
+
+    draw.line((1035, 340, 1035, 400), fill=MUTED, width=5)
+    draw.line((250, 400, 1150, 400), fill=MUTED, width=5)
+    for x in (250, 700, 1150):
+        arrow(draw, (x, 400), (x, 430))
+
+    rounded(draw, (300, 650, 1100, 742), outline=GREEN)
+    draw.text((338, 674), "Deterministic verdict", font=font(27, True), fill=TEXT)
+    draw.text(
+        (338, 713),
+        "Result equality · Glue Data Quality · scan reduction · resource use",
+        font=font(19),
+        fill=MUTED,
+    )
+    for x in (250, 700, 1150):
+        draw.line((x, 565, x, 620), fill=MUTED, width=5)
+    draw.line((250, 620, 1150, 620), fill=MUTED, width=5)
+    arrow(draw, (700, 620), (700, 640))
+
+    image.save(ROOT / "architecture.png")
+
+
 def render_athena():
     image, draw = canvas(
         "Athena measured the rewrite",
@@ -172,6 +274,7 @@ def render_ai_failures():
 
 
 if __name__ == "__main__":
+    render_architecture()
     render_athena()
     render_cross_engine()
     render_ai_failures()
