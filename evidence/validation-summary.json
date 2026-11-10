@@ -1,0 +1,61 @@
+{
+  "validated_on": "2026-11-10",
+  "region": "us-east-2",
+  "fixture_rows": 10000,
+  "result_rows": [
+    ["compute", 33030.5],
+    ["network", 33200.0],
+    ["storage", 33269.5]
+  ],
+  "athena": {
+    "baseline": {
+      "layout": "unpartitioned Iceberg table",
+      "data_scanned_bytes": 3652,
+      "engine_millis": 790,
+      "total_millis": 955
+    },
+    "candidate": {
+      "layout": "Iceberg table partitioned by event_date",
+      "data_scanned_bytes": 791,
+      "engine_millis": 934,
+      "total_millis": 1087
+    },
+    "scan_reduction_fraction": 0.7834,
+    "results_equal": true
+  },
+  "bedrock": {
+    "model": "Amazon Nova Lite",
+    "successful_repair": {
+      "input_tokens": 781,
+      "output_tokens": 124,
+      "total_tokens": 905,
+      "latency_millis": 1298
+    },
+    "observed_rejections": [
+      "A high prompt-attack threshold blocked the optimization prompt before model invocation.",
+      "Free-form output used Markdown and the wrong assumptions type.",
+      "The first tool-use proposal produced an invalid Athena identifier.",
+      "One bounded repair using validator feedback produced a valid proposal."
+    ]
+  },
+  "cross_engine": {
+    "athena_results_equal": true,
+    "emr_serverless_results_equal": true,
+    "redshift_serverless_results_equal": true,
+    "emr_resource_utilization": {
+      "vcpu_hours": 0.029,
+      "memory_gb_hours": 0.087,
+      "storage_gb_hours": 0.578
+    }
+  },
+  "glue_data_quality": {
+    "score": 1.0,
+    "execution_seconds": 92,
+    "rules": [
+      {"name": "RowCount = 10000", "result": "PASS"},
+      {"name": "IsComplete event_id", "result": "PASS"},
+      {"name": "category allow-list", "result": "PASS"}
+    ]
+  }
+}
+
