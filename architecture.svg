@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="788" viewBox="0 0 1400 788">
+  <rect width="1400" height="788" fill="#0B1020"/>
+  <style>
+    .title{font:700 40px Arial;fill:#F7F9FC}.sub{font:22px Arial;fill:#AAB6CF}
+    .box{fill:#151D33;stroke-width:3;rx:18}.h{font:700 24px Arial;fill:#F7F9FC}
+    .t{font:19px Arial;fill:#AAB6CF}.arrow{stroke:#AAB6CF;stroke-width:4;fill:none;marker-end:url(#a)}
+  </style>
+  <defs><marker id="a" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#AAB6CF"/></marker></defs>
+  <text x="60" y="70" class="title">AI lakehouse optimization lab</text>
+  <text x="60" y="110" class="sub">The model proposes; policy, measurements, and result equality decide.</text>
+
+  <rect x="60" y="175" width="270" height="135" class="box" stroke="#FF9900"/>
+  <text x="90" y="220" class="h">Amazon Bedrock</text>
+  <text x="90" y="258" class="t">Tool-shaped proposal</text><text x="90" y="286" class="t">Guardrail assessment</text>
+
+  <rect x="420" y="175" width="280" height="135" class="box" stroke="#43D17A"/>
+  <text x="450" y="220" class="h">Policy gate</text>
+  <text x="450" y="258" class="t">Read-only SQL</text><text x="450" y="286" class="t">Allow-listed identifiers</text>
+
+  <rect x="790" y="150" width="550" height="190" class="box" stroke="#55B6FF"/>
+  <text x="820" y="198" class="h">Shared S3 Tables / Iceberg data</text>
+  <text x="820" y="237" class="t">Glue Data Catalog + Lake Formation</text>
+  <text x="820" y="275" class="t">Unpartitioned baseline + partitioned candidate</text>
+  <text x="820" y="313" class="t">Immutable 10,000-row validation fixture</text>
+
+  <path d="M330 242 H410" class="arrow"/><path d="M700 242 H780" class="arrow"/>
+
+  <rect x="85" y="430" width="350" height="125" class="box" stroke="#55B6FF"/>
+  <text x="120" y="478" class="h">Amazon Athena</text><text x="120" y="518" class="t">Bytes scanned + timing</text>
+  <rect x="525" y="430" width="350" height="125" class="box" stroke="#FF9900"/>
+  <text x="560" y="478" class="h">EMR Serverless</text><text x="560" y="518" class="t">Spark cross-engine read</text>
+  <rect x="965" y="430" width="350" height="125" class="box" stroke="#E15FED"/>
+  <text x="1000" y="478" class="h">Redshift Serverless</text><text x="1000" y="518" class="t">External-schema read</text>
+  <path d="M1060 340 V395 H260 V420" class="arrow"/><path d="M1060 340 V395 H700 V420" class="arrow"/><path d="M1060 340 V420" class="arrow"/>
+
+  <rect x="320" y="640" width="760" height="95" class="box" stroke="#43D17A"/>
+  <text x="355" y="680" class="h">Deterministic verdict</text>
+  <text x="355" y="714" class="t">Result equality · Glue Data Quality · scan reduction · measured resource use</text>
+  <path d="M260 555 V610 H700 V630" class="arrow"/><path d="M700 555 V630" class="arrow"/><path d="M1140 555 V610 H700 V630" class="arrow"/>
+</svg>
