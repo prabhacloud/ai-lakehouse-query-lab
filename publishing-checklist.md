@@ -9,6 +9,6 @@
 - [x] Data-quality assertions pass.
 - [x] All created AWS resources are removed and absence is verified.
 - [x] Screenshots contain no credentials or private identifiers.
-- [ ] GitHub repository contains verified code and evidence.
+- [x] GitHub repository contains verified code and evidence.
 - [ ] Article remains a draft until explicit publication confirmation.
 
