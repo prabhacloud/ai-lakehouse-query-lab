@@ -1,0 +1,62 @@
+{
+  "modelId": "amazon.nova-lite-v1:0",
+  "system": [
+    {
+      "text": "You are a cautious analytics optimization reviewer. You may propose a query, but you have no authority to execute it. Return JSON only."
+    }
+  ],
+  "messages": [
+    {
+      "role": "user",
+      "content": [
+        {
+          "text": "Return exactly one JSON object with exactly four keys: engine, sql, rationale, assumptions. engine must be athena, emr, or redshift. The SQL must be one read-only SELECT statement. Never invent a table or column.\n\nAvailable tables share the same 10,000 rows:\n- \"s3tablescatalog/<TABLE_BUCKET_NAME>\".\"lab\".\"events_raw\": unpartitioned Iceberg table\n- \"s3tablescatalog/<TABLE_BUCKET_NAME>\".\"lab\".\"events\": Iceberg table partitioned by event_date\nColumns: event_id bigint, category varchar, amount double, event_date date.\n\nOriginal query:\nSELECT category, ROUND(SUM(amount),2) AS total_amount FROM \"s3tablescatalog/<TABLE_BUCKET_NAME>\".\"lab\".\"events_raw\" WHERE event_date = DATE '2026-11-01' GROUP BY category ORDER BY category\n\nA previous proposal was rejected because it combined the catalog, namespace, and table inside one quoted identifier. Preserve the exact three separately quoted identifier components shown above. The workload is interactive and currently runs in Athena. Recommend one lower-scan alternative without changing the result columns or their meaning."
+        }
+      ]
+    }
+  ],
+  "inferenceConfig": {
+    "maxTokens": 500,
+    "temperature": 0,
+    "topP": 0.9
+  },
+  "guardrailConfig": {
+    "guardrailIdentifier": "<GUARDRAIL_ID>",
+    "guardrailVersion": "DRAFT",
+    "trace": "enabled"
+  },
+  "toolConfig": {
+    "tools": [
+      {
+        "toolSpec": {
+          "name": "submit_query_optimization_proposal",
+          "description": "Submit exactly one constrained analytics optimization proposal for deterministic validation.",
+          "inputSchema": {
+            "json": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["engine", "sql", "rationale", "assumptions"],
+              "properties": {
+                "engine": {
+                  "type": "string",
+                  "enum": ["athena", "emr", "redshift"]
+                },
+                "sql": {"type": "string"},
+                "rationale": {"type": "string"},
+                "assumptions": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                }
+              }
+            }
+          }
+        }
+      }
+    ],
+    "toolChoice": {
+      "tool": {
+        "name": "submit_query_optimization_proposal"
+      }
+    }
+  }
+}
